@@ -9,7 +9,6 @@ namespace bTools.Shaders
 	{
 		[Range( 0, 10 )]
 		public float Intensity = 2;
-		[Readonly]
 		public List<GlowingObject> glowingObjects;
 
 		private CommandBuffer _commandBuffer;
