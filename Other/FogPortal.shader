@@ -75,7 +75,7 @@
 			o.Emission = _EmissiveColor;
 			o.Metallic = 0;
 			o.Smoothness = 0;
-			o.Alpha = min(gradient , depth);
+			o.Alpha = min(gradient, depth);
 		}
 
 		ENDCG

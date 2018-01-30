@@ -1,5 +1,5 @@
 ﻿Shader "bShaders/FadingWireframe"
-{
+{//TODO : check with freezeframe shaders, add inverse etc
 	Properties
 	{
 		_WireThickness ("Wire Thickness", RANGE(0, 800)) = 100

@@ -1,5 +1,5 @@
 ﻿Shader "bShaders/RimFade"
-{
+{// TODO : Add sharpness
 	Properties
 	{
 		[HDR]_Color("Color", Color) = (1,1,1,1)

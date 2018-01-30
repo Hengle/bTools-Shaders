@@ -1,5 +1,5 @@
 ﻿Shader "bShaders/FogBlending"
-{
+{//TODO: Move calc to frag
 	Properties
 	{
 	_Color("Color", Color) = (1,1,1,1)

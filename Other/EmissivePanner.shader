@@ -1,5 +1,5 @@
 ﻿Shader "bShaders/EmissivePanner"
-{
+{//TODO : Replace panning map with vector map
 	Properties
 	{
 		_Color("Color", Color) = (1,1,1,1)
