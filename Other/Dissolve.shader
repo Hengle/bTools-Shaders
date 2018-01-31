@@ -12,7 +12,6 @@
 		_CutOut("Dissolve Value", Range(0,1)) = 0.5
 		_RampSize("Ramp Size", Range(0,1)) = 0.1
 		_RampSharp("Ramp Sharpness", Range(0,1)) = 0.1
-
 	}
 	SubShader
 	{
@@ -27,10 +26,10 @@
 		sampler2D _MainTex;
 		sampler2D _Metallic;
 		sampler2D _DissMap;
-
 		half _Glossiness;
 		half _Metalness;
 		fixed4 _Color;
+
 		float _CutOut;
 		float _RampSize;
 		float _RampSharp;
