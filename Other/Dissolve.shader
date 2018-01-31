@@ -4,36 +4,36 @@
 	{
 		_Color("Color", Color) = (1,1,1,1)
 		_MainTex("Albedo (RGB)", 2D) = "white" {}
-
-		_DissMap("Dissolve Map", 2D) = "white" {}
-		[NoScaleOffset]_Ramp("Ramp Dissolve", 2D) = "white" {}
-		_CutOut("CutOut", Range(0,1)) = 0.0
-		_RampSize("RampSize", Range(0,1)) = 0.0
-
-		[NoScaleOffset]_MetalRough("Metal Smoothness", 2D) = "white" {}
+		[NoScaleOffset]_Metallic("Metal (R) Roughness (A)", 2D) = "white" {}
+		_Metalness("Metallic", Range(0,1)) = 0.5
 		_Glossiness("Smoothness", Range(0,1)) = 0.5
-		_Metallic("Metallic", Range(0,1)) = 0.0
+
+		_DissMap("Ramp (RGB) - Dissolve (A)", 2D) = "white" {}
+		_CutOut("Dissolve Value", Range(0,1)) = 0.5
+		_RampSize("Ramp Size", Range(0,1)) = 0.1
+		_RampSharp("Ramp Sharpness", Range(0,1)) = 0.1
+
 	}
 	SubShader
 	{
 		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 		LOD 200
-		Zwrite Off
+		ZWrite Off
 
 		CGPROGRAM
 		#pragma surface surf Standard fullforwardshadows
 		#pragma target 3.0
 
 		sampler2D _MainTex;
+		sampler2D _Metallic;
 		sampler2D _DissMap;
-		sampler2D _Ramp;
-		sampler2D _MetalRough;
 
 		half _Glossiness;
-		half _Metallic;
+		half _Metalness;
 		fixed4 _Color;
 		float _CutOut;
 		float _RampSize;
+		float _RampSharp;
 
 		struct Input
 		{
@@ -45,14 +45,19 @@
 		{
 			// Main Color
 			fixed4 col = tex2D(_MainTex, IN.uv_MainTex) * _Color;
-			fixed4 metalRough = tex2D(_MetalRough, IN.uv_MainTex);
-			// Dissolve value
-			fixed dissolve = tex2D(_DissMap, IN.uv_DissMap) - _CutOut;
-			// Ramp color for the given dissolve value
-			fixed4 ramp = tex2D(_Ramp, float2(step(dissolve, _RampSize) *  ((min(dissolve, _RampSize)) / _RampSize),0.0));
+			fixed4 metalRough = tex2D(_Metallic, IN.uv_MainTex);
 
-			o.Albedo = (1 - step(dissolve, _RampSize)) * col + (step(dissolve, _RampSize)) * ramp;
-			o.Metallic = _Metallic * metalRough.r;
+			// Dissolve value
+			fixed dissolve = tex2D(_DissMap, IN.uv_DissMap).a - _CutOut;
+
+			// Ramp color for the given dissolve value
+			fixed stepVal = step(dissolve, _RampSize);
+			fixed smoothVal = smoothstep(_RampSize, _RampSize - _RampSharp, dissolve);
+			
+			fixed4 ramp = tex2D(_DissMap, float2(stepVal *  ((min(dissolve, _RampSize)) / _RampSize), 0.0));
+
+			o.Albedo = (1 - smoothVal) * col + (smoothVal) * ramp;
+			o.Metallic = _Metalness * metalRough.r;
 			o.Smoothness = _Glossiness * metalRough.a;
 			o.Alpha = dissolve;
 
