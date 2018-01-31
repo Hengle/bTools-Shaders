@@ -53,7 +53,6 @@
 			// Ramp color for the given dissolve value
 			fixed stepVal = step(dissolve, _RampSize);
 			fixed smoothVal = smoothstep(_RampSize, _RampSize - _RampSharp, dissolve);
-			
 			fixed4 ramp = tex2D(_DissMap, float2(stepVal *  ((min(dissolve, _RampSize)) / _RampSize), 0.0));
 
 			o.Albedo = (1 - smoothVal) * col + (smoothVal) * ramp;
