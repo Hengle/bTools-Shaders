@@ -11,7 +11,7 @@
 		[NoScaleOffset]_GlitterMap("Glitter", 2D) = "black"{}
 		_DepthFactor("Depth Factor", range(-1,1)) = 0
 		_Tess("Tessellation", Range(1,32)) = 4
-		_BlurAmount("Input Blur Amount", range(0,0.1)) = 0.015
+		_BlurAmount("Input Blur Amount", range(0,0.01)) = 0.015
 		_MainGloss("Main Gloss", range(0,1)) = 0.25
 		_CrunchGloss("Crunch Gloss", range(0,1)) = 0.9
 	}
@@ -82,13 +82,14 @@
 				{
 					// Sample the depth and blur it
 					float3 depth = blur(_HeightMap,  float4(v.texcoord.xy, 0, 0), _BlurAmount / 10);
-
 					v.color.x = depth.x + depth.y;
 
-					depth *= _DepthFactor;
-					depth += 0.5 * -_DepthFactor;
+					float depthFac = _DepthFactor * 0.1;
 
-					v.vertex.xyz += v.normal * depth.r;
+					depth *= depthFac;
+					depth -= depthFac / 1.5;
+
+					v.vertex.xyz -= v.normal * depth.r;
 				}
 
 				void surf(Input IN, inout SurfaceOutputStandard o)

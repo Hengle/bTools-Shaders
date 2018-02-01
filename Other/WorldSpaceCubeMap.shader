@@ -4,7 +4,7 @@
 	{
 		_Color ("Color", Color) = (1,1,1,1)
 		_MainTex ("Albedo (RGB)", Cube) = "white" {}
-		_Scale("Sacle", float) = 1
+		_Scale("Scale", float) = 1
 		_Glossiness ("Smoothness", Range(0,1)) = 0.5
 		_Metallic ("Metallic", Range(0,1)) = 0.0
 	}
@@ -41,9 +41,6 @@
 			float xPart = (frac(IN.worldPos.x * _Scale )) - 0.5;
 			float yPart = (frac(IN.worldPos.y * _Scale )) - 0.5;
 			float zPart = (frac(IN.worldPos.z * _Scale )) - 0.5;
-			//float xPart = ((IN.worldPos.x * _Scale )) - 0.5;
-			//float yPart = ((IN.worldPos.y * _Scale )) - 0.5;
-			//float zPart = ((IN.worldPos.z * _Scale )) - 0.5;
 
 			float4x4 mat = {1, 0, 0, xPart,
 							0, 1, 0, yPart,
