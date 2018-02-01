@@ -1,42 +1,82 @@
 ﻿Shader "bShaders/FadingWireframe"
-{//TODO : check with freezeframe shaders, add inverse etc
+{
 	Properties
 	{
-		_WireThickness ("Wire Thickness", RANGE(0, 800)) = 100
+		_Color("Color", Color) = (1,1,1,1)
+		_MainTex("Albedo (RGB)", 2D) = "white" {}
+		[NoScaleOffset]_Metallic("Metal (R) Roughness (A)", 2D) = "white" {}
+		_Metalness("Metallic", Range(0,1)) = 0.5
+		_Glossiness("Smoothness", Range(0,1)) = 0.5
+
+		[Space(30)]
 		_WireColor ("Wire Color", Color) = (0.0, 1.0, 0.0, 1.0)
-		_BaseColor ("Base Color", Color) = (0.0, 0.0, 0.0, 0.0)
+		_WireThickness ("Wire Thickness", Range(0, 800)) = 100
+		_FadeSharpness ("Fade Sharpness", Range(0.001, 1)) = 1
 		_Distance ("Distance", float) = 1.0
+		[Toggle(INVERSE_MODE)]_InverseMode("Inverse", float) = 0
 	}
 
 	SubShader
 	{
-		Tags {
-			"IgnoreProjector"="True"
+		Tags 
+		{
 			"Queue"="Transparent"
-			"RenderType"="Transparent"
+			"RenderType"="Opaque"
 		}
 
-		Pass
+		CGPROGRAM
+		#pragma surface surf Standard fullforwardshadows
+		#pragma target 3.0
+
+		sampler2D _MainTex;
+		sampler2D _Metallic;
+		half _Glossiness;
+		half _Metalness;
+		fixed4 _Color;
+
+		struct Input
 		{
+			float2 uv_MainTex;
+		};
+
+		void surf(Input IN, inout SurfaceOutputStandard o)
+		{
+			// Main Texture
+			fixed4 col = tex2D(_MainTex, IN.uv_MainTex) * _Color;
+			fixed4 metalRough = tex2D(_Metallic, IN.uv_MainTex);
+
+			o.Albedo = col.rgb;
+			o.Metallic = _Metalness * metalRough.r;
+			o.Smoothness = _Glossiness * metalRough.a;
+			o.Alpha = col.a;
+		}
+		ENDCG
+		
+		Pass 
+		{
+			Tags 
+			{
+				"IgnoreProjector"="True"
+				"Queue"="Transparent"
+				"RenderType"="Transparent"
+			}
+
 			Blend SrcAlpha OneMinusSrcAlpha
 			ZWrite Off
 			Cull Back
-
-			// Wireframe shader based on the the following
-			// http://developer.download.nvidia.com/SDK/10/direct3d/Source/SolidWireframe/Doc/SolidWireframe.pdf
 
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma geometry geom
 			#pragma fragment frag
-			#pragma shader_feature USE_DISTANCE
+			#pragma shader_feature INVERSE_MODE
 
 			#include "UnityCG.cginc"
 
 			float _WireThickness;
 			float _Distance;
+			float _FadeSharpness;
 			uniform float4 _WireColor; 
-			uniform float4 _BaseColor;
 
 			struct appdata
 			{
@@ -122,15 +162,22 @@
 				float minDistanceToEdge = min(i.dist[0], min(i.dist[1], i.dist[2])) * i.dist[3];
 
 				// Early out if we know we are not on a line segment.
-				if(minDistanceToEdge > 0.9)
+				if(minDistanceToEdge > 0.5)
 				{
-					return fixed4(_BaseColor.rgb,0);
+					return 0;
 				}
 
 				// Smooth our line out
-				float t = exp2(-2 * minDistanceToEdge * minDistanceToEdge);
-				fixed4 finalColor = lerp(_BaseColor, _WireColor, t);
-				finalColor.a = 1 - saturate(_Distance + i.distToCam);
+				float t = exp2(2 * minDistanceToEdge * minDistanceToEdge);
+
+				fixed4 transparentCol = fixed4(_WireColor.rgb, 0);
+				fixed4 finalColor = lerp(transparentCol, _WireColor, t);
+
+				#if INVERSE_MODE
+				finalColor.a *= min(saturate((_Distance - i.distToCam) /_FadeSharpness), finalColor.a);
+				#else
+				finalColor.a = 1 - max(saturate((_Distance - i.distToCam) / _FadeSharpness), finalColor.a);
+				#endif
 
 				return finalColor;
 			}

@@ -1,21 +1,20 @@
 ﻿Shader "bShaders/FogBlending"
-{//TODO: Move calc to frag
+{
 	Properties
 	{
-	_Color("Color", Color) = (1,1,1,1)
-	_MainTex("Texture", 2D) = "white" {}
-	_FogColor("Fog Color", Color) = (0.3, 0.4, 0.7, 1.0)
-	_FogStart("Fog Start", float) = 0
-	_FogEnd("Fog End", float) = 0
+		_Color("Color", Color) = (1,1,1,1)
+		_MainTex("Texture", 2D) = "white" {}
+		_FogColor("Fog Color", Color) = (0.3, 0.4, 0.7, 1.0)
+		_FogStart("Fog Start", float) = 0
+		_FogEnd("Fog End", float) = 0
 	}
 
-		SubShader
+	SubShader
 	{
 		Tags{ "RenderType" = "Opaque" }
 
 		CGPROGRAM
-
-		#pragma surface surf Lambert finalcolor:mycolor vertex:myvert
+		#pragma surface surf Lambert finalcolor:lightfunc vertex:vert
 
 		struct Input
 		{
@@ -29,14 +28,14 @@
 		half _FogEnd;
 		sampler2D _MainTex;
 
-		void myvert(inout appdata_full v, out Input data)
+		void vert(inout appdata_full v, out Input o)
 		{
-			UNITY_INITIALIZE_OUTPUT(Input,data);
-			float4 pos = mul(unity_ObjectToWorld, v.vertex).xyzw;
-			data.fog = clamp(lerp(0, 1, (_FogStart - pos.y) / (_FogEnd - _FogStart)), 0, 1);
+			UNITY_INITIALIZE_OUTPUT(Input, o);
+			float4 pos = mul(unity_ObjectToWorld, v.vertex);
+			o.fog = clamp(lerp(0, 1, (_FogStart - pos.y) / (_FogEnd - _FogStart)), 0, 1);
 		}
 
-		void mycolor(Input IN, SurfaceOutput o, inout fixed4 color)
+		void lightfunc(Input IN, SurfaceOutput o, inout fixed4 color)
 		{
 			fixed3 fogColor = _FogColor.rgb;
 			fixed3 tintColor = _Color.rgb;

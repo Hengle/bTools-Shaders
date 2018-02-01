@@ -1,47 +1,56 @@
 ﻿Shader "bShaders/RimFade"
-{// TODO : Add sharpness
+{
 	Properties
 	{
-		[HDR]_Color("Color", Color) = (1,1,1,1)
-		_MainTex("MainTex", 2D) = "white" {}
-		_Falloff("Falloff", Range(0,10)) = 1
+		_Color("Color", Color) = (1,1,1,1)
+		_MainTex("Albedo (RGB)", 2D) = "white" {}
+		[NoScaleOffset]_Metallic("Metal (R) Roughness (A)", 2D) = "white" {}
+		_Metalness("Metallic", Range(0, 1)) = 0.5
+		_Glossiness("Smoothness", Range(0, 1)) = 0.5
+
+		_Falloff("Falloff", Range(0, 10)) = 1
 	}
-		SubShader
+	SubShader
+	{
+		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
+		LOD 200
+		ZWrite off
+		Blend SrcAlpha OneMinusSrcAlpha
+
+		CGPROGRAM
+		#pragma surface surf Standard fullforwardshadows alpha:fade
+
+		#pragma target 3.0
+
+		sampler2D _MainTex;
+		sampler2D _Metallic;
+		half _Glossiness;
+		half _Metalness;
+		fixed4 _Color;
+
+		fixed _Falloff;
+		fixed _FalloffSharp;
+
+		struct Input
 		{
-			Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
-			LOD 200
-			ZWrite off
-			Blend SrcAlpha OneMinusSrcAlpha
+			float2 uv_MainTex;
+			float3 viewDir;
+		};
 
-			CGPROGRAM
-			#pragma surface surf Standard fullforwardshadows alpha:fade
+		void surf(Input IN, inout SurfaceOutputStandard o)
+		{
+			fixed4 col = tex2D(_MainTex, IN.uv_MainTex) * _Color;
+			fixed4 metalRough = tex2D(_Metallic, IN.uv_MainTex);
 
-			#pragma target 3.0
+			o.Albedo = col.rgb;
+			o.Metallic = _Metalness * metalRough.r;
+			o.Smoothness = _Glossiness * metalRough.a;
+			
+			float rim = saturate(dot(IN.viewDir, o.Normal) *_Falloff);
 
-			sampler2D _MainTex;
-
-			struct Input
-			{
-				float2 uv_MainTex;
-				float3 viewDir;
-			};
-
-			fixed4 _Color;
-			fixed _Falloff;
-
-			void surf(Input IN, inout SurfaceOutputStandard o)
-			{
-				float rim = saturate(dot(IN.viewDir, o.Normal) *_Falloff);
-
-				fixed4 c = tex2D(_MainTex, IN.uv_MainTex);
-				o.Albedo = _Color;
-				o.Alpha = c.r * rim *_Color.a;
-				o.Emission = _Color * c.r;
-
-				o.Metallic = 0;
-				o.Smoothness = 0;
-			}
-			ENDCG
+			o.Alpha = rim * col.a;
 		}
-			FallBack "Diffuse"
+		ENDCG
+	}
+	FallBack "Diffuse"
 }

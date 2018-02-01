@@ -83,8 +83,8 @@ Material:
     - _DetailNormalMapScale: 1
     - _Distance: -6
     - _DstBlend: 0
-    - _FogEnd: 0
-    - _FogStart: -0.06
+    - _FogEnd: 3.5
+    - _FogStart: -0.1
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1

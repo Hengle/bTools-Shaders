@@ -47,9 +47,14 @@
 				// Main Texture
 				fixed4 col = tex2D(_MainTex, IN.uv_MainTex) * _Color;
 				fixed4 metalRough = tex2D(_Metallic, IN.uv_MainTex);
-				fixed4 emissiveMap = tex2D(_Emissive, IN.uv_MainTex);
+
+				o.Albedo = col.rgb;
+				o.Metallic = _Metalness * metalRough.r;
+				o.Smoothness = _Glossiness * metalRough.a;
+				o.Alpha = col.a;
 
 				// Emissive
+				fixed4 emissiveMap = tex2D(_Emissive, IN.uv_MainTex);
 				fixed4 panMap = tex2D(_PanningMap, IN.uv_PanningMap);
 				// We get the move direction from the pan map, multiply it by time and speed.
 				fixed2 panDir = fixed2(panMap.r - 0.5, panMap.g - 0.5);
@@ -63,11 +68,6 @@
 				fixed3 emissive = tex2D(_Emissive, IN.uv_MainTex).rgb;
 
 				o.Emission = _EmissiveColor * panMask;
-
-				o.Albedo = col.rgb;
-				o.Metallic = _Metalness * metalRough.r;
-				o.Smoothness = _Glossiness * metalRough.a;
-				o.Alpha = col.a;
 			}
 			ENDCG
 		}
