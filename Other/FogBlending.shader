@@ -19,7 +19,7 @@
 		struct Input
 		{
 			float2 uv_MainTex;
-			half fog;
+			float3 worldPos;
 		};
 
 		fixed4 _Color;
@@ -31,27 +31,26 @@
 		void vert(inout appdata_full v, out Input o)
 		{
 			UNITY_INITIALIZE_OUTPUT(Input, o);
-			float4 pos = mul(unity_ObjectToWorld, v.vertex);
-			o.fog = clamp(lerp(0, 1, (_FogStart - pos.y) / (_FogEnd - _FogStart)), 0, 1);
+			o.worldPos = mul(unity_ObjectToWorld, v.vertex);
 		}
 
 		void lightfunc(Input IN, SurfaceOutput o, inout fixed4 color)
 		{
 			fixed3 fogColor = _FogColor.rgb;
 			fixed3 tintColor = _Color.rgb;
+			float fog = clamp(lerp(0, 1, (_FogStart - IN.worldPos.y) / (_FogEnd - _FogStart)), 0, 1);
+
 			#ifdef UNITY_PASS_FORWARDADD
 			fogColor = 0;
 			#endif
-			color.rgb = saturate(lerp(color.rgb * tintColor, fogColor, IN.fog));
+			color.rgb = saturate(lerp(color.rgb * tintColor, fogColor, fog));
 		}
 
 		void surf(Input IN, inout SurfaceOutput o)
 		{
 			o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
 		}
-
 		ENDCG
 	}
-
-		Fallback "Diffuse"
+	Fallback "Diffuse"
 }
