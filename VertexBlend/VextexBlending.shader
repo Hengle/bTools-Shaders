@@ -5,17 +5,17 @@
 		//Background
 		_BackgroundVertexAlbedo("Albedo (Red)", 2D) = "white" {}
 		[NoScaleOffset]_BackgroundVertexNormal("Normal (Red)", 2D) = "bump" {}
-		[NoScaleOffset]_BackgroundMetalRough("(R)Metal (A)Rough (Red)", 2D) = "black" {}
+		[NoScaleOffset]_BackgroundMetalRough("(R)Metal (G) Height (A)Rough (Red)", 2D) = "black" {}
 
 		// Overlay1
 		_GreenVertexAlbedo("Albedo (Green)", 2D) = "white" {}
 		[NoScaleOffset]_GreenVertexNormal("Normal (Green)", 2D) = "bump" {}
-		[NoScaleOffset]_GreenMetalRough("(R)Metal (A)Rough (Green)", 2D) = "black" {}
+		[NoScaleOffset]_GreenMetalRough("(R)Metal (G) Height (A)Rough (Green)", 2D) = "black" {}
 
 		// Overlay2
 		_BlueVertexAlbedo("Albedo (Blue)", 2D) = "white" {}
 		[NoScaleOffset]_BlueVertexNormal("Normal (Blue)", 2D) = "bump" {}
-		[NoScaleOffset]_BlueMetalRough("(R)Metal (A)Rough (Blue)", 2D) = "black" {}
+		[NoScaleOffset]_BlueMetalRough("(R)Metal (G) Height  (A)Rough (Blue)", 2D) = "black" {}
 	}
 	SubShader
 	{
