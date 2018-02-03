@@ -105,7 +105,7 @@ Material:
     - _SrcBlend: 1
     - _StencilValue: 0
     - _UVSec: 0
-    - _WireThickness: 612
+    - _WireThickness: 413
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.6641988, g: 0.43382353, b: 1, a: 1}
