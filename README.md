@@ -15,6 +15,9 @@
 ## **Dissolve**  
 ![](https://i.imgur.com/kluccFu.gif)
 
+## **Fading Wireframe**  
+![](https://i.imgur.com/5x3INf8.gif)
+
 ## **Worldspace UV & Cubemap**  
 ![](https://i.imgur.com/3Adi2bU.gif)
 ![](https://i.imgur.com/hziRfLr.gif)
