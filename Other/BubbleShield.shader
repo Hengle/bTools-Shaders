@@ -5,18 +5,21 @@
 		_MainTex ("Texture", 2D) = "white" {}
 		_Color("Tint Color", Color) = (1,1,1,1)
 		_RimColor("Rim Color", Color) = (1,1,1,1)
-		_PatternColor("Tint Color", Color) = (1,1,1,1)
+		_PatternColor("Pattern Color", Color) = (1,1,1,1)
+		_PatternFadeSpeed("Pattern Fade Speed", float) = 2
 
 		[Normal]_DistortNormal ("Distort Normal", 2D) = "bump" {}
-		_DistortSpeed ("Distort Speed", Range(0, 500)) = 0
-		_DistortIntensity ("Distort Intensity", Range(0, 5)) = 1
-		_DistortDistance ("Distort Distance", Range(1, 50)) = 25
+		_DistortSpeed ("Distort Speed", Range(0, 500)) = 20
+		_DistortIntensity ("Distort Intensity", Range(0, 1)) = 0.075
+		_DistortDistance ("Distort Distance", Range(1, 20)) = 6
 
-		_RimSize("Rim Size", range(0,3)) = 1
-		_RimHardness("Rim Hardness", range(0.001,1)) = 1
+		_RimSize("Rim Size", range(0,3)) = 1.7
+		_RimFrenel("Rim Frenel", range(0,1)) = 0.577
+		_RimHardness("Rim Hardness", range(0.001,1)) = 0.177
 
-		_Fresnel("Fresnel", range(0,0.5)) = 1
-		_FresnelGradient("Fresnel Gradient", range(0.001, 1)) = 1
+		_Fresnel("Fresnel", range(0,0.2)) = 0.066
+		_FresnelGradient("Fresnel Gradient", range(0.001, 0.1)) = 0.021
+
 	}
 	SubShader
 	{
@@ -55,7 +58,7 @@
 			sampler2D _MainTex, _GrabTexture, _DistortNormal;
 			uniform sampler2D _CameraDepthTexture;
 			float4 _MainTex_ST, _DistortNormal_ST, _Color, _RimColor, _PatternColor;
-			float _RimSize,_RimHardness, _Fresnel, _DistortSpeed, _DistortDistance, _DistortIntensity, _FresnelGradient;
+			float _RimSize,_RimHardness, _Fresnel, _DistortSpeed, _DistortDistance, _DistortIntensity, _FresnelGradient, _PatternFadeSpeed,_RimFrenel;
 			
 			v2f vert (appdata v)
 			{
@@ -75,8 +78,10 @@
 			{
 
 				float depth = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(i.scrPos)));
-				float frenel = saturate(((1 - dot(normalize(i.viewDir), i.normal)) - _Fresnel) * _FresnelGradient / _Fresnel);
+				float rawFrenel = dot(normalize(i.viewDir), i.normal);
+				float frenel = saturate((1 - rawFrenel - _Fresnel) * _FresnelGradient / _Fresnel);
 				float rim = saturate(1 - (depth - i.scrPos.w) * _RimSize / 0.2 );
+				float rimFrenel = saturate(1 - rawFrenel - _RimFrenel);
 				rim /= _RimHardness;
 
 				float2 noiseUV = 0;
@@ -91,7 +96,12 @@
 				fixed3 shieldMask = saturate(frenel + rim);
 				fixed4 pattern = tex2D(_MainTex, i.uv);
 
-				fixed4 final = (distortedBG * _Color) + (frenel * pattern * _PatternColor) + (rim * _RimColor * _RimColor.a);
+				float test = (sin(_Time.y * _PatternFadeSpeed + pattern.a * 10) + 1.2) / 2.4;
+				float patternKiller = smoothstep(pattern.a, 0, test );
+
+				fixed4 final = (distortedBG * _Color ) + (frenel * pattern.r * _PatternColor * _PatternColor.a * test) + (max(rim, rimFrenel) * _RimColor * _RimColor.a);
+				final.a = _Color.a;
+
 				return final;
 			}
 
