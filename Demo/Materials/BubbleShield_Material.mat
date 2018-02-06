@@ -80,7 +80,7 @@ Material:
     - _PatternFadeSpeed: 2
     - _RimFrenel: 0.577
     - _RimHardness: 0.177
-    - _RimSize: 1.7
+    - _RimSize: 1.53
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
