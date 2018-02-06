@@ -1,4 +1,4 @@
-﻿Shader "Unlit/Shapes"
+﻿Shader "bShaders/Shapes"
 {
 	Properties
 	{
@@ -301,11 +301,11 @@
 				//}
 
 				// The Empress
-				float d1 = polySDF(uvs, 5);
-				float2 ts = float2(uvs.x, 1-uvs.y);
-				float d2 = polySDF(ts, 5);
-				col += fill(d1, 0.75) * fill(frac(d1 * 5), 0.5);
-				col -= fill (d1, 0.6) * fill(frac(d2 * 4.9), 0.45);
+				//float d1 = polySDF(uvs, 5);
+				//float2 ts = float2(uvs.x, 1-uvs.y);
+				//float d2 = polySDF(ts, 5);
+				//col += fill(d1, 0.75) * fill(frac(d1 * 5), 0.5);
+				//col -= fill (d1, 0.6) * fill(frac(d2 * 4.9), 0.45);
 
 				// Bundle
 				//float2 st = uvs.yx;
@@ -338,13 +338,13 @@
 				//col -= stroke(c, 0.15, 0.04);
 
 				// The Star
-				//col += stroke(raysSDF(uvs, 8), 0.5, 0.15);
-				//float inner = starSDF(uvs, 6, 0.09);
-				//float outer = starSDF(uvs.yx, 6, 0.09);
-				//col *= step(0.7, outer);
-				//col += fill(outer, 0.5);
-				//col -= stroke(inner, 0.25, 0.06);
-				//col += stroke(outer, 0.6, 0.05);
+				col += stroke(raysSDF(uvs, 8), 0.5, 0.15);
+				float inner = starSDF(uvs, 6, 0.09);
+				float outer = starSDF(uvs.yx, 6, 0.09);
+				col *= step(0.7, outer);
+				col += fill(outer, 0.5);
+				col -= stroke(inner, 0.25, 0.06);
+				col += stroke(outer, 0.6, 0.05);
 
 				// Judgement
 				//col += flip(stroke(raysSDF(uvs, 28), 0.5, 0.2), fill(uvs.y, 0.5));

@@ -1,4 +1,4 @@
-﻿Shader "Unlit/BubbleShield"
+﻿Shader "bShaders/BubbleShield"
 {
 	Properties
 	{
@@ -19,7 +19,6 @@
 
 		_Fresnel("Fresnel", range(0,0.2)) = 0.066
 		_FresnelGradient("Fresnel Gradient", range(0.001, 0.1)) = 0.021
-
 	}
 	SubShader
 	{
@@ -55,8 +54,8 @@
 				float4 grabPos : TEXCOORD3;
 			};
 
-			sampler2D _MainTex, _GrabTexture, _DistortNormal;
 			uniform sampler2D _CameraDepthTexture;
+			sampler2D _MainTex, _GrabTexture, _DistortNormal;
 			float4 _MainTex_ST, _DistortNormal_ST, _Color, _RimColor, _PatternColor;
 			float _RimSize,_RimHardness, _Fresnel, _DistortSpeed, _DistortDistance, _DistortIntensity, _FresnelGradient, _PatternFadeSpeed,_RimFrenel;
 			
