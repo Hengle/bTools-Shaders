@@ -24,7 +24,8 @@
 	{
 		Tags { "RenderType"="Transparent" "Queue"="Transparent" }
 		LOD 100
-		ZWrite Off
+		ZWrite On
+		Cull Off
 		Blend SrcAlpha OneMinusSrcAlpha
 
 		GrabPass {}
@@ -75,10 +76,10 @@
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
-
-				float depth = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(i.scrPos)));
 				float rawFrenel = dot(normalize(i.viewDir), i.normal);
 				float frenel = saturate((1 - rawFrenel - _Fresnel) * _FresnelGradient / _Fresnel);
+
+				float depth = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(i.scrPos)));
 				float rim = saturate(1 - (depth - i.scrPos.w) * _RimSize / 0.2 );
 				float rimFrenel = saturate(1 - rawFrenel - _RimFrenel);
 				rim /= _RimHardness;

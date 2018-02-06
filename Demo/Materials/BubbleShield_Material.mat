@@ -62,13 +62,13 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DistortDistance: 6
-    - _DistortIntensity: 0.075
+    - _DistortDistance: 2.08
+    - _DistortIntensity: 0.056
     - _DistortScale: 1.37
-    - _DistortSpeed: 20
+    - _DistortSpeed: 18
     - _DstBlend: 0
-    - _Fresnel: 0.066
-    - _FresnelGradient: 0.021
+    - _Fresnel: 0.041
+    - _FresnelGradient: 0.0328
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -78,9 +78,9 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PatternFadeSpeed: 2
-    - _RimFrenel: 0.577
+    - _RimFrenel: 0.408
     - _RimHardness: 0.177
-    - _RimSize: 1.53
+    - _RimSize: 1.36
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -90,4 +90,4 @@ Material:
     - _Color: {r: 0.81617653, g: 0.8326571, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _PatternColor: {r: 0.7256503, g: 0.694096, b: 0.9632353, a: 1}
-    - _RimColor: {r: 0.28546715, g: 0.5365708, b: 0.88235295, a: 1}
+    - _RimColor: {r: 0.4542418, g: 0.28546715, b: 0.88235295, a: 1}
