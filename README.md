@@ -13,6 +13,7 @@
 ![gif](https://i.imgur.com/G4BzFpn.gif)
 
 ## **Material Blending**  
+*Requires bTools Core*
 ![gif](https://i.imgur.com/VjcXfq7.gif)
 
 ## **Shield**
