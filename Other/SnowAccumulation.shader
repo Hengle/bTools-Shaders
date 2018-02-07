@@ -1,4 +1,8 @@
-﻿Shader "bShaders/SnowAccumulation" 
+﻿// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
+
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
+Shader "bShaders/SnowAccumulation" 
 {
 	Properties
 	{
@@ -40,11 +44,16 @@
 			float2 uv_MainTex;
 			float2 uv_SnowMainTex;
 			float upDot;
+
+			float4 vertTangent;
+			float3 vertNormal;
 		};
 
 		void vert(inout appdata_full v, out Input o)
 		{
 			UNITY_INITIALIZE_OUTPUT(Input, o);
+			o.vertTangent = v.tangent;
+			o.vertNormal = v.normal;
 			
 			#if DO_DISPLACE
 			fixed3 worldNormal = UnityObjectToWorldNormal(v.normal);
@@ -57,12 +66,16 @@
 		{
 			fixed4 col = tex2D(_MainTex, IN.uv_MainTex) * _Color;
 			fixed4 metalRough = tex2D(_Metallic, IN.uv_MainTex);
-			fixed4 ao = tex2D(_AmbientOcclu, IN.uv_MainTex);
-			fixed3 normal = UnpackNormal(tex2D(_NormalMap, IN.uv_MainTex));
+			half ao = tex2D(_AmbientOcclu, IN.uv_MainTex).r;
+			half3 mainNormal = UnpackNormal(tex2D(_NormalMap, IN.uv_MainTex));
 
+			//Get normal map in world space
 			#if !DO_DISPLACE
-			fixed3 worldNormal = UnityObjectToWorldNormal(normal);
-			IN.upDot = saturate(dot(normal, _UpVector) + _Tolerance);
+			float3 vertBinormal = cross(IN.vertNormal, IN.vertTangent.xyz) * IN.vertTangent.w;
+			float3x3 rotation = float3x3(IN.vertTangent.xyz, vertBinormal, IN.vertNormal );
+			half3 worldNormal = UnityObjectToWorldNormal( mul(mainNormal, rotation));
+
+			IN.upDot = saturate(dot(worldNormal, _UpVector) + _Tolerance);
 			#endif
 
 			#if AO_MASK
@@ -76,7 +89,7 @@
 			o.Albedo = lerp(col, snowCol, IN.upDot);
 			o.Metallic = round(lerp(metalRough.r, snowMetalRough.r, IN.upDot));
 			o.Smoothness = lerp(metalRough.a, snowMetalRough.a, IN.upDot);
-			o.Normal = lerp(normal, snowNormal, IN.upDot);
+			o.Normal = lerp(mainNormal, snowNormal, IN.upDot);
 			o.Occlusion = ao;
 			o.Alpha = 1;
 		}

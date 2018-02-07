@@ -71,15 +71,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SnowMainTex:
-        m_Texture: {fileID: 2800000, guid: be060005ba348fd4d82162b938c3a45e, type: 3}
+        m_Texture: {fileID: -128852668, guid: 0d21870a1ce72a04287387d15febb629, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SnowMetallic:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 1315893746, guid: 0d21870a1ce72a04287387d15febb629, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SnowNormalMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 1998651809, guid: 0d21870a1ce72a04287387d15febb629, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -90,7 +90,7 @@ Material:
     - _Cutoff: 0.5
     - _DO_DISPLACE: 0
     - _DetailNormalMapScale: 1
-    - _DisplaceAmount: 0.21
+    - _DisplaceAmount: 0.12
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 1
@@ -105,7 +105,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Tolerance: 0.214
+    - _Tolerance: 0.053
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
