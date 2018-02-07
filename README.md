@@ -9,6 +9,9 @@
 ## **Snow Surface**  
 ![gif](https://i.imgur.com/LUYM2kq.gif)
 
+## **Snow/Moss Accumulation**
+![gif](https://i.imgur.com/G4BzFpn.gif)
+
 ## **Material Blending**  
 ![gif](https://i.imgur.com/VjcXfq7.gif)
 
