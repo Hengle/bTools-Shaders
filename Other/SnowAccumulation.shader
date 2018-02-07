@@ -9,14 +9,14 @@
 		[NoScaleOffset][Normal]_NormalMap("Normal Map", 2D) = "bump" {}
 
 		_UpVector("Up Vector", vector) = (0,1,0,0)
-		_Tolerance("Tolerance", range(0,1)) = 0
+		_Tolerance("Tolerance", range(-1,1)) = 0
 		[Toggle(AO_MASK)]_AO_MASK("Use AO as a mask", float) = 0
-		[Toggle(DO_DISPLACE)]_DO_DISPLACE("Displace", float) = 0
+		[Toggle(DO_DISPLACE)]_DO_DISPLACE("Use Vertex", float) = 0
 		_DisplaceAmount("Displace Amount", float) = 1
-		_SnowColor("Snow Color", Color) = (1,1,1,1)
-		_SnowMainTex("Snow Albedo (RGB)", 2D) = "white" {}
-		[NoScaleOffset]_SnowMetallic("Snow Metal (R) Roughness (A)", 2D) = "black" {}
-		[NoScaleOffset][Normal]_SnowNormalMap("Snow Normal Map", 2D) = "bump" {}
+		_SnowColor("Color", Color) = (1,1,1,1)
+		_SnowMainTex("Albedo (RGB)", 2D) = "white" {}
+		[NoScaleOffset]_SnowMetallic("Metal (R) Roughness (A)", 2D) = "black" {}
+		[NoScaleOffset][Normal]_SnowNormalMap("Normal Map", 2D) = "bump" {}
 	}
 	SubShader
 	{
@@ -48,7 +48,7 @@
 			
 			#if DO_DISPLACE
 			fixed3 worldNormal = UnityObjectToWorldNormal(v.normal);
-			o.upDot =  saturate(dot(worldNormal, _UpVector));
+			o.upDot =  saturate(dot(worldNormal, _UpVector) + _Tolerance);
 			v.vertex.xyz += UnityWorldToObjectDir(_UpVector) * _DisplaceAmount * o.upDot;
 			#endif
 		}
@@ -83,4 +83,5 @@
 		ENDCG
 	}
 	FallBack "Diffuse"
+	CustomEditor "SnowAccumulationEditor"
 }
