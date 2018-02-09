@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1790661768}
-  m_IndirectSpecularColor: {r: 0.2744246, g: 0.29844058, b: 0.4394367, a: 0.1}
+  m_IndirectSpecularColor: {r: 0.061208077, g: 0.07246923, b: 0.16220339, a: 0.1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -348,7 +348,6 @@ GameObject:
   - component: {fileID: 191058142}
   - component: {fileID: 191058141}
   - component: {fileID: 191058145}
-  - component: {fileID: 191058146}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -431,21 +430,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraDepthMode: 1
---- !u!114 &191058146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 191058140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88942ab51031bd244ad8fd4942d42b82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shatterMap: {fileID: 2800000, guid: d9fa81331218cd14182705e3dbb122f5, type: 3}
-  updateSnapshot: 0
-  generateNewPattern: 0
-  tileDistance: 0
 --- !u!43 &202135903
 Mesh:
   m_ObjectHideFlags: 0
@@ -1324,90 +1308,6 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 3300000, guid: 77e5f6ab3d990ca409dc8e567c26efd8,
     type: 3}
   m_PrefabInternal: {fileID: 440420562}
---- !u!1 &531003888
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 531003892}
-  - component: {fileID: 531003891}
-  - component: {fileID: 531003890}
-  - component: {fileID: 531003889}
-  m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!23 &531003889
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 531003888}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_Materials:
-  - {fileID: 2100000, guid: e363b01979a122145a4117562298524a, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!65 &531003890
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 531003888}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &531003891
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 531003888}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &531003892
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 531003888}
-  m_LocalRotation: {x: 0.3279285, y: -0.03285514, z: 0.07194948, w: 0.94138557}
-  m_LocalPosition: {x: 48.73, y: 7.99, z: -6.155}
-  m_LocalScale: {x: 3.3059993, y: 3.3059998, z: 3.3059998}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 38.473003, y: -1.074, z: 8.366}
 --- !u!1 &585322155
 GameObject:
   m_ObjectHideFlags: 0
