@@ -19,6 +19,9 @@
 ## **Shield**
 https://i.imgur.com/wcgjbh9.gif
 
+## **Screen Glitch**
+![gif](https://i.imgur.com/C6RAzH1.gif)
+
 ## **Dissolve**  
 ![gif](https://i.imgur.com/kluccFu.gif)
 
