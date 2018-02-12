@@ -61,26 +61,35 @@
 				// p.x += _Time.y * 15 * (rand(row) - 0.5);
 				// col = step(rand(floor(p.x)), 0.66);
 
+				// Pentagons !
 				int scale = 1;
 				float2 uvs = 1 - i.uv * scale;
 				uvs = frac(uvs);
 
 				float row = rand(floor(uvs.y)) + 0.5;
 				float column = rand(floor(uvs.x)) + 0.5;
-				float time = _Time.y;
 
 				float poly = polySDF(uvs, 5);
-				float circle = raysSDF(uvs,1);
-
-				float fillVal = step(circle, frac(time));
-				fillVal = lerp(fillVal, 1 - fillVal, step(sin(_Time.y * 05), 1));
+				float circle = raysSDF(uvs, 1);
+				float rays = raysSDF(rotate(uvs, radians(22.5)), 5);
 
 				float shape = 0;
-				//shape += fill(poly, 0.33);
-				shape += fill(poly, 0.33) *  fillVal;
-				shape -= fill(poly, 0.22) * 2;
+				shape += fill(rays, 0.1) *  pow(circleSDF(uvs), 12 );
 
-				col =  shape;
+				for(float i = 1; i < 10; i++)
+				{
+					float timeScale = (_Time.y + i/10 + (pow(rand(row * column), 3))) ;
+					float time = pow(sin(timeScale), 2);
+					float side = round(pow(cos(timeScale + (PI / 4)), 2));
+					float fillVal = step(lerp(circle, 1 - circle, side), frac(time));
+
+					shape = saturate(shape + fill(poly,  0.9 - (i/ 10))  / pow(i,3));
+					shape = saturate(shape + fill(poly,  0.9 - (i/ 10)) *  fillVal / pow(i,2));
+					shape = saturate(shape - fill(poly,  0.85 - (i/ 10)));
+				}
+
+				shape = saturate(shape + fill(poly, 0.1));
+				col = shape;
 
 				return col;
 			}
