@@ -1,6 +1,7 @@
 # **bTools - Plugins for Unity**  
 
 ## Shaders
+*See Also: [Shaders sketches](https://github.com/Blobinet/bTools-Shaders/tree/master/Includes)*
 
 ## **Fog blending**  
 ![gif](https://i.imgur.com/OeIrSRi.gif)
