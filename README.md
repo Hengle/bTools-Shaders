@@ -23,6 +23,9 @@ https://i.imgur.com/wcgjbh9.gif
 ## **Subsurface Scattering**
 ![gif](https://i.imgur.com/oL3jnG6.gif)
 
+## **Point Ramp Lighting**
+![gif](https://i.imgur.com/mrT8IXp.gif)
+
 ## **Screen Glitch**
 ![gif](https://i.imgur.com/C6RAzH1.gif)
 
