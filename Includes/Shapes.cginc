@@ -35,7 +35,7 @@ float3 bridge(float3 c, float d, float s, float w)
 	return c + stroke(d, s, w);
 }
 
-// Transforms the uvs into another shape
+// Signed distance functions
 float circleSDF(float2 uv)
 {
 	return length(uv - 0.5) * 2;
