@@ -63,8 +63,10 @@ public class ContactBlendingBakerEditor : Editor
 
 		List<Vector3> originalMeshVerts = new List<Vector3>();
 		originalMesh.GetVertices( originalMeshVerts );
+		List<Vector3> originalMeshNormals = new List<Vector3>();
+		originalMesh.GetNormals( originalMeshNormals );
 
-		float maxDistance = 1.4f;
+		float maxDistance = 1.75f;
 
 		bool oldVal = Physics.queriesHitBackfaces;
 		Physics.queriesHitBackfaces = true;
@@ -72,26 +74,47 @@ public class ContactBlendingBakerEditor : Editor
 		for ( int i = 0 ; i < originalMesh.vertexCount ; i++ )
 		{
 			Vector3 worldVertexPos = meshFilter.transform.TransformPoint( originalMeshVerts[i] );
-			//			meshColors[i] = meshColors[i].WithAlpha( 1 - MathExtensions.Remap01( closestDistance, 0, maxDistance ) );
 			meshColors[i] = meshColors[i].WithAlpha( 0 );
 
-			RaycastHit hitInfo;
-			float closestDistance = maxDistance;
-			if ( Physics.Raycast( worldVertexPos, Vector3.up, out hitInfo, maxDistance, Physics.AllLayers, QueryTriggerInteraction.Ignore ) )
+			RaycastHit hitInfoUp, hitInfoDown;
+			bool hitUp, hitDown;
+
+			hitUp = Physics.Raycast( worldVertexPos, Vector3.up, out hitInfoUp, maxDistance, Physics.AllLayers, QueryTriggerInteraction.Ignore );
+			hitDown = Physics.Raycast( worldVertexPos, Vector3.down, out hitInfoDown, maxDistance, Physics.AllLayers, QueryTriggerInteraction.Ignore );
+
+			Vector3 worldNormal = meshFilter.transform.TransformDirection( originalMeshNormals[i] );
+
+			Color vertColor = new Color( worldNormal.x, worldNormal.y, worldNormal.z, 0 );
+
+			if ( hitUp && hitDown )
 			{
-				closestDistance = hitInfo.distance;
-
-				Color vertColor = new Color( hitInfo.normal.x, hitInfo.normal.y, hitInfo.normal.z, 1 - MathExtensions.Remap01( closestDistance, 0, maxDistance ) );
-				meshColors[i] = vertColor;
+				if ( hitInfoUp.distance > hitInfoDown.distance )
+				{
+					vertColor = new Color( hitInfoDown.normal.x, hitInfoDown.normal.y, hitInfoDown.normal.z, 1 - MathExtensions.Remap01( hitInfoDown.distance, 0, maxDistance ) );
+					//Debug.DrawRay( hitInfoDown.point, hitInfoDown.normal, Color.blue, 0.1f );
+					//Debug.DrawLine( worldVertexPos, hitInfoDown.point, Color.green, 0.1f );
+				}
+				else
+				{
+					vertColor = new Color( hitInfoUp.normal.x, hitInfoUp.normal.y, hitInfoUp.normal.z, 1 - MathExtensions.Remap01( hitInfoUp.distance, 0, maxDistance ) );
+					//Debug.DrawRay( hitInfoUp.point, hitInfoUp.normal, Color.blue, 0.1f );
+					//Debug.DrawLine( worldVertexPos, hitInfoUp.point, Color.magenta, 0.1f );
+				}
 			}
-			else if ( Physics.Raycast( worldVertexPos, Vector3.down, out hitInfo, maxDistance, Physics.AllLayers, QueryTriggerInteraction.Ignore ) )
+			else if ( hitUp )
 			{
-				closestDistance = hitInfo.distance;
-
-				Color vertColor = new Color( hitInfo.normal.x, hitInfo.normal.y, hitInfo.normal.z, 1 - MathExtensions.Remap01( closestDistance, 0, maxDistance ) );
-				meshColors[i] = vertColor;
+				vertColor = new Color( hitInfoUp.normal.x, hitInfoUp.normal.y, hitInfoUp.normal.z, 1 - MathExtensions.Remap01( hitInfoUp.distance, 0, maxDistance ) );
+				//Debug.DrawRay( hitInfoUp.point, hitInfoUp.normal, Color.blue, 0.1f );
+				//Debug.DrawLine( worldVertexPos, hitInfoUp.point, Color.blue, 0.1f );
+			}
+			else if ( hitDown )
+			{
+				vertColor = new Color( hitInfoDown.normal.x, hitInfoDown.normal.y, hitInfoDown.normal.z, 1 - MathExtensions.Remap01( hitInfoDown.distance, 0, maxDistance ) );
+				//Debug.DrawRay( hitInfoDown.point, hitInfoDown.normal, Color.blue, 0.1f );
+				//Debug.DrawLine( worldVertexPos, hitInfoDown.point, Color.red, 0.1f );
 			}
 
+			meshColors[i] = vertColor;
 
 		}
 
