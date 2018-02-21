@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: ChannelDebugger_Material
   m_Shader: {fileID: 4800000, guid: fcdeaa8c0e3056b43acd63e0df03370a, type: 3}
-  m_ShaderKeywords: _CHANNEL_WORLDNORMAL
+  m_ShaderKeywords: _CHANNEL_UVS2
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

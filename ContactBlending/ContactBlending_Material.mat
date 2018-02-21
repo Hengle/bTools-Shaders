@@ -38,6 +38,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MainMetal:
+        m_Texture: {fileID: 2800000, guid: 87dc82d9e46e87240b3db668ab59e87e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainNormal:
         m_Texture: {fileID: 2800000, guid: 8a8bba91c15485c479e662bacbe20d99, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -62,31 +66,39 @@ Material:
         m_Texture: {fileID: 2800000, guid: 7c75c051f3f844e438d8c8eb067764ff, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _TerrainMetal:
+        m_Texture: {fileID: 2800000, guid: 87dc82d9e46e87240b3db668ab59e87e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _TerrainNormal:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 9bb6cd9db1956994d8fac9a93f2bd864, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TerrainTex:
-        m_Texture: {fileID: 2800000, guid: be060005ba348fd4d82162b938c3a45e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0cae3bebbdb9bd34daa1e2a4694c74dc, type: 3}
         m_Scale: {x: 15, y: 15}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
+    - _Debug: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Hardness: 0.102
+    - _Hardness: 0.001
     - _Metallic: 0
     - _Mode: 0
+    - _NormalBlend: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _Range: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Test: 3.63
+    - _Test: 1
+    - _TexBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
