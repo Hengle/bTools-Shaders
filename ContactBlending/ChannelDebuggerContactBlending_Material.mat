@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: ChannelDebugger_Material 1
+  m_Name: ChannelDebuggerContactBlending_Material
   m_Shader: {fileID: 4800000, guid: fcdeaa8c0e3056b43acd63e0df03370a, type: 3}
   m_ShaderKeywords: _CHANNEL_NORMAL
   m_LightmapFlags: 4

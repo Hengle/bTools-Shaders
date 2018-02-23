@@ -1,12 +1,11 @@
-﻿// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
-
-Shader "bshaders/ContactBlending" 
+﻿Shader "bshaders/ContactBlending" 
 {
 	Properties 
 	{
 		_Color ("Color", Color) = (1,1,1,1)
 		_MainTex ("Albedo (RGB)", 2D) = "white" {}
 		[NoScaleOffset]_MainMetal ("Albedo (RGB)", 2D) = "black" {}
+		[NoScaleOffset]_MainHeight ("Height", 2D) = "grey" {}	
 		[NoScaleOffset][Normal]_MainNormal ("Normal", 2D) = "bump" {}
 
 
@@ -16,6 +15,8 @@ Shader "bshaders/ContactBlending"
 
 		_TexBlend("Tex Blend", range(0, 1)) = 1
 		_NormalBlend("Normal Blend", range(0, 1)) = 1
+		_HeightFactor("Height Factor", range(-1, 1)) = 0
+		_HeightHardness("Height Hardness", range(0.001, 1)) = 1
 	}
 	SubShader 
 	{
@@ -35,9 +36,9 @@ Shader "bshaders/ContactBlending"
 			float4 vertTangent;
 		};
 
-		sampler2D _MainTex, _TerrainTex, _MainNormal, _TerrainNormal, _MainMetal, _TerrainMetal;
+		sampler2D _MainTex, _TerrainTex, _MainNormal, _TerrainNormal, _MainMetal, _TerrainMetal, _MainHeight;
 		fixed4 _Color;
-		float _TexBlend, _NormalBlend;
+		float _TexBlend, _NormalBlend, _HeightFactor, _HeightHardness;
 
 		void vert(inout appdata_full v, out Input o)
 		{
@@ -59,12 +60,14 @@ Shader "bshaders/ContactBlending"
 			fixed4 mainColor = tex2D (_MainTex, IN.uv_MainTex) * _Color;
 			float3 mainNormal = UnpackNormal(tex2D(_MainNormal, IN.uv_MainTex));
 			fixed4 mainMetalRough = tex2D (_MainMetal, IN.uv_MainTex);
+			fixed4 mainHeight = tex2D (_MainHeight, IN.uv_MainTex);
 
 			fixed4 terrainColor = tex2D (_TerrainTex, IN.uv_TerrainTex);
 			float3 terrainNormal = UnpackNormal(tex2D(_TerrainNormal, IN.uv_TerrainTex));
 			fixed4 terrainMetalRough = tex2D (_TerrainMetal, IN.uv_TerrainTex);
 
 			float blend = IN.color.a * _TexBlend;
+			blend = saturate(min(blend, ((mainHeight.r + _HeightFactor)) / _HeightHardness));
 
 			o.Albedo = lerp( mainColor.rgb, terrainColor.rgb, blend);
 			o.Normal = normalize(lerp(mainNormal, terrainNormal, blend));
