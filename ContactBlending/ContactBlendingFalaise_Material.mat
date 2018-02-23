@@ -96,7 +96,7 @@ Material:
     - _HeightHardness: 1
     - _Metallic: 0
     - _Mode: 0
-    - _NormalBlend: 1
+    - _NormalBlend: 0.966
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Range: 1
