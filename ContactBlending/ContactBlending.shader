@@ -24,7 +24,7 @@
 		LOD 200
 
 		CGPROGRAM
-		#pragma surface surf Standard fullforwardshadows addshadow vertex:vert
+		#pragma surface surf Standard fullforwardshadows vertex:vert
 		#pragma target 5.0
 
 		struct Input 
@@ -67,7 +67,7 @@
 			fixed4 terrainMetalRough = tex2D (_TerrainMetal, IN.uv_TerrainTex);
 
 			float blend = IN.color.a * _TexBlend;
-			blend = saturate(min(blend, ((mainHeight.r + _HeightFactor)) / _HeightHardness));
+			blend = saturate((blend * ((mainHeight.r + _HeightFactor +  IN.color.a)) / _HeightHardness));
 
 			o.Albedo = lerp( mainColor.rgb, terrainColor.rgb, blend);
 			o.Normal = normalize(lerp(mainNormal, terrainNormal, blend));
