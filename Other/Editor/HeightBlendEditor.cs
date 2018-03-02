@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class HeightBlendEditor : ShaderGUI
 {
-	// Properties.
+	MaterialEditor m_MaterialEditor = null;
 	MaterialProperty color = null;
 	MaterialProperty blendColor = null;
 	MaterialProperty mainAlbedo = null;
@@ -18,9 +18,6 @@ public class HeightBlendEditor : ShaderGUI
 	MaterialProperty heightValue = null;
 	MaterialProperty heightFalloff = null;
 	MaterialProperty paralaxValue = null;
-
-	MaterialEditor m_MaterialEditor = null;
-	// Styles.
 
 	GUIContent albedoLabel = new GUIContent( "Albedo" );
 	GUIContent normalLabel = new GUIContent( "Normal" );
