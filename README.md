@@ -28,16 +28,3 @@ https://i.imgur.com/wcgjbh9.gif
 
 ## **Screen Glitch**
 ![gif](https://i.imgur.com/C6RAzH1.gif)
-
-## **Dissolve**  
-![gif](https://i.imgur.com/kluccFu.gif)
-
-## **Fading Wireframe**  
-![gif](https://i.imgur.com/5x3INf8.gif)
-
-## **Worldspace UV & Cubemap**  
-![gif](https://i.imgur.com/3Adi2bU.gif)
-![gif](https://i.imgur.com/hziRfLr.gif)
-
-## **Portal Card**  
-![gif](https://i.imgur.com/3W6iJf7.gif)
