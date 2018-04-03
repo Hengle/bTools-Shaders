@@ -13,9 +13,10 @@
 ## **Snow/Moss Accumulation**
 ![gif](https://i.imgur.com/G4BzFpn.gif)
 
-## **Material Blending**  
-*Requires bTools Core*
-![gif](https://i.imgur.com/VjcXfq7.gif)
+## **Blend Machine**  
+*Available on [Gumroad](https://gum.co/zTybHE)*
+![gif](https://i.imgur.com/V6uyw34.gif)
+![gif](https://i.imgur.com/gKq5Om2.gif)
 
 ## **Shield**
 https://i.imgur.com/wcgjbh9.gif
