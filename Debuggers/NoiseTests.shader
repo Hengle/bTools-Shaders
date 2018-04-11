@@ -15,9 +15,9 @@
 			#pragma fragment frag
 			
 			#include "UnityCG.cginc"
-			#include "PixelNoise.cginc"
-			#include "ClassicNoise.cginc"
-			#include "Shapes.cginc"
+			#include "../Includes/PixelNoise.cginc"
+			#include "../Includes/ClassicNoise.cginc"
+			#include "../Includes/Shapes.cginc"
 
 			struct appdata
 			{
