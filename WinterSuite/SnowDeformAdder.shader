@@ -1,4 +1,4 @@
-﻿Shader "bShaders/SnowDeformAdder"
+﻿Shader "Hidden/SnowDeformAdder"
 {
 	Properties
 	{

@@ -1,4 +1,4 @@
-﻿Shader "bShaders/Shapes"
+﻿Shader "bTools/Other/Shapes"
 {
 	Properties
 	{
@@ -16,7 +16,7 @@
 			#pragma fragment frag
 			
 			#include "UnityCG.cginc"
-			#include "Shapes.cginc"
+			#include "../Includes/Shapes.cginc"
 
 			struct appdata
 			{

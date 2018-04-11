@@ -1,4 +1,4 @@
-﻿Shader "bShaders/VextexBlending" 
+﻿Shader "bTools/Blending/VextexBlending" 
 {
 	Properties
 	{

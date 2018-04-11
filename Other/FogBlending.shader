@@ -1,4 +1,4 @@
-﻿Shader "bShaders/FogBlending"
+﻿Shader "bTools/Other/FogBlending"
 {
 	Properties
 	{

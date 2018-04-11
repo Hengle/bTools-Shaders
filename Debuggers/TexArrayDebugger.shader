@@ -1,4 +1,4 @@
-﻿Shader "bShaders/TexArrayDebugger"
+﻿Shader "bTools/Debuggers/TexArrayDebugger"
 {
 	Properties
 	{

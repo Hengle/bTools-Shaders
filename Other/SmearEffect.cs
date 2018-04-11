@@ -2,29 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmearEffect : MonoBehaviour
+namespace bTools.Shaders
 {
-    Material smearMat;
-
-    void Start()
+    public class SmearEffect : MonoBehaviour
     {
-        smearMat = GetComponent<MeshRenderer>().material;
-        StartCoroutine(UpdateLastPos());
-    }
+        Material smearMat;
 
-    void LateUpdate()
-    {
-        smearMat.SetVector("_CurrentPos", transform.position);
-    }
-
-    IEnumerator UpdateLastPos()
-    {
-        WaitForEndOfFrame eof = new WaitForEndOfFrame();
-
-        while (true)
+        void Start()
         {
-            smearMat.SetVector("_LastPos", transform.position);
-            yield return eof;
+            smearMat = GetComponent<MeshRenderer>().material;
+            StartCoroutine(UpdateLastPos());
+        }
+
+        void LateUpdate()
+        {
+            smearMat.SetVector("_CurrentPos", transform.position);
+        }
+
+        IEnumerator UpdateLastPos()
+        {
+            WaitForEndOfFrame eof = new WaitForEndOfFrame();
+
+            while (true)
+            {
+                smearMat.SetVector("_LastPos", transform.position);
+                yield return eof;
+            }
         }
     }
 }

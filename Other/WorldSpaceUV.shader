@@ -1,4 +1,4 @@
-﻿Shader "bShaders/WorldSpaceUV" 
+﻿Shader "bTools/Other/WorldSpaceUV" 
 {
 	Properties 
 {

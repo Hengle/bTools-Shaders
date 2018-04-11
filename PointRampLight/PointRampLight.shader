@@ -1,4 +1,4 @@
-﻿Shader "bShaders/RampLighting"
+﻿Shader "bTools/Lighting/RampLighting"
 {
 	Properties
 	{

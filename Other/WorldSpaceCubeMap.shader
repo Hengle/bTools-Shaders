@@ -1,4 +1,4 @@
-﻿Shader "bShaders/WorldSpaceCubeMap" 
+﻿Shader "bTools/Other/WorldSpaceCubeMap" 
 {
 	Properties 
 	{

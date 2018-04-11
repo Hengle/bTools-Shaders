@@ -1,4 +1,4 @@
-﻿Shader "bShaders/DirectionalSmear" 
+﻿Shader "bTools/Other/DirectionalSmear" 
 {
 	Properties 
 	{

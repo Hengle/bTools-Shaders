@@ -1,4 +1,4 @@
-﻿Shader "bShaders/SubSurfaceScattering" 
+﻿Shader "bTools/Other/SubSurfaceScattering" 
 {
 	Properties 
 	{

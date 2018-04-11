@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-public class HeightBlendEditor : ShaderGUI
+public class HeightBlendShaderGUI : ShaderGUI
 {
 	MaterialEditor m_MaterialEditor = null;
 	MaterialProperty color = null;

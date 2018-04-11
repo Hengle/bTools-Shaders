@@ -1,4 +1,4 @@
-﻿Shader "bShaders/Dissolve" 
+﻿Shader "bTools/Other/Dissolve" 
 {
 	Properties
 	{

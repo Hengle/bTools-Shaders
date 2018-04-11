@@ -1,5 +1,4 @@
-
-Shader "bShaders/LayeredSkybox" 
+Shader "bTools/Other/LayeredSkybox" 
 {
 Properties 
 {

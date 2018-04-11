@@ -1,4 +1,4 @@
-﻿Shader "bShaders/ChannelDebugger"
+﻿Shader "bTools/Debuggers/ChannelDebugger"
 {
 	Properties
 	{

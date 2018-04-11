@@ -6,7 +6,7 @@ using System;
 namespace bTools.Shaders
 {
     [CustomEditor(typeof(VertexBlendApplicator))]
-    public class VertexBlendEditor : Editor
+    public class VertexBlendApplicatorEditor : Editor
     {
         // Paint settings
         public Color paintColor;

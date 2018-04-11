@@ -1,4 +1,4 @@
-﻿Shader "bShaders/RimFade"
+﻿Shader "bTools/Other/RimFade"
 {
 	Properties
 	{

@@ -1,4 +1,4 @@
-﻿Shader "bShaders/FogPortal"
+﻿Shader "bTools/Other/FogPortal"
 {
 	Properties
 	{

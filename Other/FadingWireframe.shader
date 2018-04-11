@@ -1,4 +1,4 @@
-﻿Shader "bShaders/FadingWireframe"
+﻿Shader "bTools/Other/FadingWireframe"
 {
 	Properties
 	{

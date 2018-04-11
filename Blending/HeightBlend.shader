@@ -1,4 +1,4 @@
-﻿Shader "bShaders/HeightBlend" 
+﻿Shader "bTools/Blending/HeightBlend" 
 {
 	Properties 
 	{
@@ -91,5 +91,5 @@
 		ENDCG
 	}
 	FallBack "Diffuse"
-	CustomEditor "HeightBlendEditor"
+	CustomEditor "HeightBlendShaderGUI"
 }

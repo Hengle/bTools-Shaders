@@ -1,4 +1,4 @@
-﻿Shader "bShaders/GlitchSuite"
+﻿Shader "bTools/ScreenEffects/GlitchSuite"
 {
 	Properties
 	{

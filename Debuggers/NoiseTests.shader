@@ -1,4 +1,4 @@
-﻿Shader "Unlit/NoiseTests"
+﻿Shader "bTools/Debuggers/NoiseTests"
 {
 	Properties
 	{

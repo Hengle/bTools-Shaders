@@ -1,4 +1,4 @@
-﻿Shader "bShaders/EmissivePanner"
+﻿Shader "bTools/Other/EmissivePanner"
 {
 	Properties
 	{
