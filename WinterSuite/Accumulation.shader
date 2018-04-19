@@ -1,4 +1,4 @@
-﻿Shader "bTools/Winter/SnowAccumulation" 
+﻿Shader "bTools/Winter/Accumulation" 
 {
 	Properties
 	{

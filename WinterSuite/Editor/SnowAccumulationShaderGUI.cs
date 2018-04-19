@@ -59,7 +59,7 @@ public class SnowAccumulationShaderGUI : ShaderGUI
         }
         GUILayout.Space(8);
 
-        EditorGUILayout.LabelField("Snow Texture", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("Accumulation Texture", EditorStyles.boldLabel);
         EditorGUI.DrawRect(EditorGUILayout.GetControlRect(false, 1), HeaderSeparatorColor);
         GUILayout.Space(8);
 
@@ -140,11 +140,11 @@ public class SnowAccumulationShaderGUI : ShaderGUI
         color = FindProperty("_Color", props);
         mainTex = FindProperty("_MainTex", props);
         mainTexName = new GUIContent(mainTex.displayName);
-        metalRough = FindProperty("_Metallic", props);
+        metalRough = FindProperty("_MetallicGlossMap", props);
         metalRoughName = new GUIContent(metalRough.displayName);
-        ambientOcclu = FindProperty("_AmbientOcclu", props);
+        ambientOcclu = FindProperty("_OcclusionMap", props);
         ambientOccluName = new GUIContent(ambientOcclu.displayName);
-        normalMap = FindProperty("_NormalMap", props);
+        normalMap = FindProperty("_BumpMap", props);
         normalMapName = new GUIContent(normalMap.displayName);
 
         snowColor = FindProperty("_SnowColor", props);
