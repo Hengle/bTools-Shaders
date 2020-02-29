@@ -26,78 +26,102 @@
 	}
 	SubShader 
 	{
-		Tags { "RenderType"="Opaque" }
-		LOD 200
-		
-		CGPROGRAM
-		#pragma surface surf Standard fullforwardshadows
-		#pragma target 3.0
-		#pragma shader_feature DRAW_SUBGRID
-
-		sampler2D _MainTex;
-		half _Glossiness;
-		half _Metallic;
-		fixed4 _BackgroundColor, _RowColor, _ColumnColor, _IntersectionColor;
-		fixed4 _SubRowColor, _SubColumnColor, _SubIntersectionColor;
-		fixed4 _Offsets;
-		float _GridSize, _LineWidth;
-		float _SubGridSize, _SubLineWidth;
-
-		struct Input 
+		Pass 
 		{
-			float3 worldPos;
-			float3 worldNormal;
-		};
-		
-		void surf (Input IN, inout SurfaceOutputStandard o) 
-		{
-			fixed4 col;
-			fixed2 UVs;
-		   	if(abs(IN.worldNormal.y) > 0.5)
+			Tags 
 			{
-				UVs = IN.worldPos.xz;
+				"RenderType" = "Opaque"
+				"RenderPipeline" = "LightweightPipeline"
+				"IgnoreProjector" = "True"
 			}
-			else if(abs(IN.worldNormal.x) > 0.5)
-			{
-				UVs = IN.worldPos.yz;
-			}
-			else
-			{
-				UVs = IN.worldPos.xy;
-			}
- 
-			fixed rowMask =  step(frac(UVs.x * _GridSize + _Offsets.x), _LineWidth );
-			fixed columnMask = step(frac(UVs.y * _GridSize + _Offsets.y), _LineWidth );
-			fixed intersectionMask = rowMask * columnMask;
-			rowMask -= intersectionMask;
-			columnMask -= intersectionMask;
+			LOD 100
 			
-			columnMask *= _ColumnColor.a;
-			rowMask *= _RowColor.a;
-			intersectionMask *= _IntersectionColor.a;
+			HLSLPROGRAM
+			#pragma prefer_hlslcc gles
+			#pragma exclude_renderers d3d11_9x
+			#pragma target 2.0
 
-			fixed backgroundMask = saturate(1 - columnMask - rowMask - intersectionMask);
-			col = (rowMask * _RowColor ) + (columnMask * _ColumnColor) + (intersectionMask * _IntersectionColor) + (backgroundMask * _BackgroundColor);
+			#pragma vertex vert
+			#pragma fragment frag
 
-			#if DRAW_SUBGRID
-				fixed subRowMask =  step(frac(UVs.x * _SubGridSize + _Offsets.z), _SubLineWidth );
-				fixed subColumnMask = step(frac(UVs.y * _SubGridSize + _Offsets.w), _SubLineWidth );
-				fixed subIntersectionMask = subRowMask * subColumnMask;
-				subRowMask -= subIntersectionMask;
-				subColumnMask -= subIntersectionMask;
+			#pragma shader_feature DRAW_SUBGRID
+
+			#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
+
+			float4 _BackgroundColor, _RowColor, _ColumnColor, _IntersectionColor;
+			float4 _SubRowColor, _SubColumnColor, _SubIntersectionColor;
+			float4 _Offsets;
+			float _GridSize, _LineWidth;
+			float _SubGridSize, _SubLineWidth;
+
+			struct Attributes 
+			{
+				float3 positionOS : POSITION;
+				float3 normalOS   : NORMAL;
+			};
+
+			struct Varyings 
+			{
+				float4 positionCS : SV_POSITION;
+				float3 positionWS : TEXCOORD0;
+				float3 normalWS   : NORMAL;
+			};
+			
+			Varyings vert (Attributes input) 
+			{
+				Varyings output;
+				output.positionWS = TransformObjectToWorld(input.positionOS);
+				output.positionCS = TransformWorldToHClip(output.positionWS);
+				output.normalWS = TransformObjectToWorldNormal(input.normalOS);
+				return output;
+			}
+
+			float4 frag (Varyings input) : SV_Target
+			{
+				float4 col;
+				float2 UVs;
+				if(abs(input.normalWS.y) > 0.5)
+				{
+					UVs = input.positionWS.xz;
+				}
+				else if(abs(input.normalWS.x) > 0.5)
+				{
+					UVs = input.positionWS.yz;
+				}
+				else
+				{
+					UVs = input.positionWS.xy;
+				}
+	
+				float rowMask =  step(frac(UVs.x * _GridSize + _Offsets.x), _LineWidth );
+				float columnMask = step(frac(UVs.y * _GridSize + _Offsets.y), _LineWidth );
+				float intersectionMask = rowMask * columnMask;
+				rowMask -= intersectionMask;
+				columnMask -= intersectionMask;
+				
+				columnMask *= _ColumnColor.a;
+				rowMask *= _RowColor.a;
+				intersectionMask *= _IntersectionColor.a;
+
+				float backgroundMask = saturate(1 - columnMask - rowMask - intersectionMask);
+				col = (rowMask * _RowColor ) + (columnMask * _ColumnColor) + (intersectionMask * _IntersectionColor) + (backgroundMask * _BackgroundColor);
+
+				#if DRAW_SUBGRID
+					float subRowMask =  step(frac(UVs.x * _SubGridSize + _Offsets.z), _SubLineWidth );
+					float subColumnMask = step(frac(UVs.y * _SubGridSize + _Offsets.w), _SubLineWidth );
+					float subIntersectionMask = subRowMask * subColumnMask;
+					subRowMask -= subIntersectionMask;
+					subColumnMask -= subIntersectionMask;
 
 
-				fixed subGridMask = saturate(subRowMask + subColumnMask + subIntersectionMask);
-				col = saturate(col - subGridMask * 10);
-				col += ((subRowMask * _SubRowColor) + (subColumnMask * _SubColumnColor) + (subIntersectionMask * _SubIntersectionColor)) * subGridMask;
-			#endif
+					float subGridMask = saturate(subRowMask + subColumnMask + subIntersectionMask);
+					col = saturate(col - subGridMask * 10);
+					col += ((subRowMask * _SubRowColor) + (subColumnMask * _SubColumnColor) + (subIntersectionMask * _SubIntersectionColor)) * subGridMask;
+				#endif
 
-			o.Albedo = col;
-			o.Metallic = _Metallic;
-			o.Smoothness = _Glossiness;
-			o.Alpha = 1;
+				return col;
+			}
+			ENDHLSL	
 		}
-		ENDCG
 	}
-	FallBack "Diffuse"
 }
